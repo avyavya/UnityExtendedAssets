@@ -13,7 +13,6 @@ namespace ExtendedAssets.Arbor
     /// </summary>
     [AddComponentMenu("")]
     [AddBehaviourMenu("Scene/LevelLifecycle")]
-    [BuiltInBehaviour]
     public sealed class LevelLifecycle : StateBehaviour
     {
         /// <summary>
