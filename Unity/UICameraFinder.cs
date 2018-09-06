@@ -8,20 +8,25 @@ namespace ExtendedAssets.Unity
 {
     /// <inheritdoc />
     /// <summary>
-    /// UI のシーンがロードされた時に UI Camera を取ってくる
+    /// UI のシーンがロードされた時に UI Camera (Layer: UI) を取ってくる
     /// Canvas に刺して使う
     /// </summary>
     [RequireComponent(typeof(Canvas))]
     public class UICameraFinder : MonoBehaviour
     {
+        /// <summary>
+        /// 見つかったカメラをキャッシュしとく
+        /// </summary>
+        private static Camera uiCamera;
+
         private void Start()
         {
-            AttatchRenderCamera();
+            AttachRenderCamera();
             SetUpEventSystem();
         }
 
-        [ContextMenu("Attatch UI Camera")]
-        private void AttatchRenderCamera()
+        [ContextMenu("Attach UI Camera")]
+        private void AttachRenderCamera()
         {
             var canvas = GetComponent<Canvas>();
 
@@ -34,6 +39,13 @@ namespace ExtendedAssets.Unity
 #endif
 
             if (canvas.worldCamera) return;
+
+            if (uiCamera && uiCamera.gameObject.activeInHierarchy)
+            {
+                canvas.renderMode = RenderMode.ScreenSpaceCamera;
+                canvas.worldCamera = uiCamera;
+                return;
+            }
 
             for (var i = 0; i < SceneManager.sceneCount; ++i)
             {
@@ -53,6 +65,7 @@ namespace ExtendedAssets.Unity
 
                 canvas.renderMode = RenderMode.ScreenSpaceCamera;
                 canvas.worldCamera = cam;
+                uiCamera = cam;
                 return;
             }
 
