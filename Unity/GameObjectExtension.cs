@@ -1,15 +1,18 @@
 ﻿using UnityEngine;
 
 
-public static class GameObjectExtension
+namespace ExtendedAssets.Unity
 {
-    public static void SetLayerRecursively(this GameObject self, int layer)
+    public static class GameObjectExtension
     {
-        self.layer = layer;
-
-        foreach (Transform n in self.transform)
+        public static void SetLayerRecursively(this GameObject self, int layer)
         {
-            SetLayerRecursively(n.gameObject, layer);
+            self.layer = layer;
+
+            foreach (Transform n in self.transform)
+            {
+                SetLayerRecursively(n.gameObject, layer);
+            }
         }
     }
 }
