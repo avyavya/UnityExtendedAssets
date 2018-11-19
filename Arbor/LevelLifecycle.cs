@@ -2,7 +2,6 @@
 using UnityEngine.SceneManagement;
 using Arbor;
 using UniRx;
-using Debug = UnityEngine.Debug;
 
 
 namespace ExtendedAssets.Arbor
@@ -36,6 +35,9 @@ namespace ExtendedAssets.Arbor
         [SerializeField] private StateLink loaded = new StateLink();
 
         [SerializeField] private StateLink unloaded = new StateLink();
+        /// シーンロード状態
+        [HideInInspector]
+        public BoolReactiveProperty IsLoaded = new BoolReactiveProperty();
 
         private string ScenePath { get; set; }
 
@@ -47,15 +49,20 @@ namespace ExtendedAssets.Arbor
 #endif
             SceneManager.LoadSceneAsync(levelName, loadSceneMode)
                 .AsAsyncOperationObservable()
-                .Where(_ => _.isDone)
+                .Where(op => op.isDone)
                 .Select(_ => SceneManager.GetSceneByName(levelName))
-                .Where(_ => _.isLoaded)
+                .Where(scene => scene.isLoaded)
                 .Subscribe(OnLoaded);
         }
 
+//        public override void OnStateEnd()
+//        {
+//            Logger.Debug("State End. " + levelName);
+//        }
+
         private void OnLoaded(Scene scene)
         {
-            Debug.Log("Scene " + scene.name + " is loaded.");
+            Logger.Debug("Scene " + scene.name + " is loaded.");
             ScenePath = scene.path;
 
             if (loadSceneMode != LoadSceneMode.Additive || !scene.IsValid()) return;
@@ -65,7 +72,7 @@ namespace ExtendedAssets.Arbor
                 SceneManager.SetActiveScene(scene);
             }
 
-            Debug.Log("Register delegate. " + scene.name);
+            IsLoaded.Value = true;
             SceneManager.sceneUnloaded += OnUnloaded;
             Transition(loaded);
         }
@@ -74,7 +81,11 @@ namespace ExtendedAssets.Arbor
         {
             if (scene.path != ScenePath) return;
 
-            Debug.Log("Scene " + scene.name + " is unloaded. " + scene.path);
+            if (!IsLoaded.Value) return;
+
+            Logger.Debug("Scene " + scene.name + " is unloaded. " + scene.path);
+
+            IsLoaded.Value = false;
             SceneManager.sceneUnloaded -= OnUnloaded;
             Transition(unloaded);
         }

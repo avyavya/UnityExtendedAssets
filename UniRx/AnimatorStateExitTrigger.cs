@@ -18,6 +18,7 @@ namespace ExtendedAssets.UniRx
         public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
             subject.OnNext(stateInfo.shortNameHash);
+            subject.OnCompleted();
         }
     }
 }
