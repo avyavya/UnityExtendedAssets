@@ -87,7 +87,16 @@ namespace ExtendedAssets.Arbor
 
             IsLoaded.Value = false;
             SceneManager.sceneUnloaded -= OnUnloaded;
-            Transition(unloaded);
+
+            if (unloaded != null)
+            {
+                Transition(unloaded);
+            }
+        }
+
+        private void OnDestroy()
+        {
+            unloaded = null;
         }
 
 #if UNITY_EDITOR
