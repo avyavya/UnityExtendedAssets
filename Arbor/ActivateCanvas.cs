@@ -48,12 +48,7 @@ namespace ExtendedAssets.Arbor
             {
                 observer = loader.IsLoaded
                     .Skip(1)
-                    .Subscribe(x =>
-                    {
-                        if (!target) return;
-
-                        target.enabled = x ? beginState : endState;
-                    });
+                    .Subscribe(x => target.enabled = x ? beginState : endState);
             }
             else
             {

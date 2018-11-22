@@ -11,7 +11,7 @@ namespace ExtendedAssets.Unity
     /// UI のシーンがロードされた時に UI Camera (Layer: UI) を取ってくる
     /// Canvas に刺して使う
     /// </summary>
-    [RequireComponent(typeof(Canvas)), DisallowMultipleComponent]
+    [RequireComponent(typeof(Canvas))]
     public class UICameraFinder : MonoBehaviour
     {
         /// <summary>
