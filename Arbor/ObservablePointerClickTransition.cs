@@ -8,7 +8,7 @@ using UnityEngine;
 namespace ExtendedAssets.Arbor
 {
     [AddComponentMenu("")]
-    [AddBehaviourMenu("Transision/ObservablePointerClickTransition")]
+    [AddBehaviourMenu("Transition/ObservablePointerClickTransition")]
     public class ObservablePointerClickTransition : StateBehaviour
     {
         [SerializeField] private ObservablePointerClickTrigger trigger;

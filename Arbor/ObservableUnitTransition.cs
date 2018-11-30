@@ -7,7 +7,7 @@ using ExtendedAssets.UniRx;
 namespace ExtendedAssets.Arbor
 {
     [AddComponentMenu("")]
-    [AddBehaviourMenu("Transision/UnitObservableTransition")]
+    [AddBehaviourMenu("Transition/UnitObservableTransition")]
     public sealed class ObservableUnitTransition : StateBehaviour
     {
         [SerializeField] private ObservableUnitTrigger trigger;

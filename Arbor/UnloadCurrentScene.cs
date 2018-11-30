@@ -1,8 +1,8 @@
-﻿using UnityEngine;
+﻿using Arbor;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
-
-namespace Arbor.StateMachine.StateBehaviours
+namespace ExtendedAssets.Arbor
 {
     /// <inheritdoc />
     /// <summary>
@@ -16,9 +16,9 @@ namespace Arbor.StateMachine.StateBehaviours
         public override void OnStateBegin()
         {
 #if UNITY_5_5_OR_NEWER
-            SceneManager.UnloadSceneAsync(gameObject.scene.name);
+            SceneManager.UnloadSceneAsync(gameObject.scene);
 #else
-			SceneManager.UnloadScene(gameObject.scene.name);
+			SceneManager.UnloadScene(gameObject.scene);
 #endif
         }
     }

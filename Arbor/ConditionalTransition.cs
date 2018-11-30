@@ -1,8 +1,8 @@
+using System;
 using Arbor;
 using UniRx;
 using UnityEngine;
 using ExtendedAssets.UniRx;
-using UnityEngine.Assertions;
 
 
 namespace ExtendedAssets.Arbor
@@ -15,13 +15,17 @@ namespace ExtendedAssets.Arbor
         [SerializeField] private StateLink trueStateLink;
         [SerializeField] private StateLink falseStateLink;
 
-        public override void OnStateAwake()
-        {
-            Assert.IsNotNull(trigger);
-            Assert.IsNotNull(trueStateLink);
+        private IDisposable observer;
 
-            trigger.AsObservable()
+        public override void OnStateBegin()
+        {
+            observer = trigger.AsObservable()
                 .Subscribe(Transition);
+        }
+
+        public override void OnStateEnd()
+        {
+            observer.Dispose();
         }
 
         private void Transition(bool cond)

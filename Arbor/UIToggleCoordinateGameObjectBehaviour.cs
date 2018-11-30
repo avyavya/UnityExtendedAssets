@@ -21,7 +21,7 @@ namespace ExtendedAssets.Arbor
         [SerializeField] private Toggle toggle;
 
         /// <summary>
-        /// Coodinate state with Toggle value
+        /// Coordinate state with Toggle value
         /// </summary>
         [SerializeField] private GameObject target;
 
@@ -38,7 +38,7 @@ namespace ExtendedAssets.Arbor
 
         public override void OnStateEnd()
         {
-            observer?.Dispose();
+            observer.Dispose();
         }
     }
 }

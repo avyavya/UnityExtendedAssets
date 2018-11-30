@@ -31,10 +31,10 @@ namespace ExtendedAssets.Arbor
             {
                 return SceneManager.LoadSceneAsync(scene, LoadSceneMode.Additive)
                     .AsAsyncOperationObservable()
-                    .Where(_ => _.isDone)
+                    .Where(x => x.isDone)
                     .Select(_ => SceneManager.GetSceneByName(scene))
-                    .Where(_ => _.isLoaded);
-//                    .Do(_ => Debug.Log(_.name + " loaded."));
+                    .Where(x => x.isLoaded);
+//                    .Do(x => Debug.Log(x.name + " loaded."));
             }).WhenAll().Subscribe(_ => Transition(loaded));
         }
     }
